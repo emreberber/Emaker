@@ -1,24 +1,14 @@
-<<<<<<< HEAD
-### görüşmeler (emre^2,ahmet)
-* 3 kasım'18 öncesi
-  * django projesi oluşturuldu, blok şeması çizildi 
-  * iş bölümü (ahmet?)
-  * bir sonraki görüşme: 8 kasım,12:00,grafik lab
-* 8 kasım'18
-  * proje planı, iş bölümü neredeyse tamam
-  * ilk prototip görmek istiyorum
-  * model'i netleştirelim,
-  * bir sonraki görüşme: 15 kasım,12:00,grafik lab
+## Emaker
+> web based exam preparation platform 
 
-### exam-maker-and-assesment
-
-sınav (test) oluşturma ve otomatik okuma
-
-- Yunus Emre Berber
-- Emre Aktürk
-- Ahmet İlgin
+* Django 1.10
+* Bootstrap 3 and 4
+* SQLite 3
 
 ------------
+
+##### Installation
+
 ```
 $ sudo apt-get install python3-venv
 $ python3 -m venv venv
@@ -35,7 +25,77 @@ $ source venv/bin/activate
 (venv) $ python manage.py startapp exam
 (venv) $ python manage.py migrate
 (venv) $ python manage.py createsuperuser
-=======
-# Emaker
-web based exam preparation platform 
->>>>>>> 509ae2ac52210137cdcf611a233c0140dd503594
+```
+<hr>
+
+##### Screenshots
+
+* Register
+
+<img src="/readme-img/register.png">
+
+* Login
+
+<img src="/readme-img/login.png">
+
+* User Profile
+
+<img src="/readme-img/profile.png">
+
+* Lessons
+
+<img src="/readme-img/lessons-index.png">
+
+* Lesson Create
+
+<img src="/readme-img/lesson-create.png">
+
+* Lesson Update
+
+<img src="/readme-img/lesson-update.png">
+
+* Questions
+
+<img src="/readme-img/questions-index.png">
+
+* Question Create
+
+<img src="/readme-img/question-create.png">
+
+* Question Update
+
+<img src="/readme-img/question-update.png">
+
+* Exams
+
+<img src="/readme-img/exams-index.png">
+
+* Exam Create
+
+<img src="/readme-img/exam-create.png">
+
+* Exam Update
+
+<img src="/readme-img/exam-update.png">
+
+* Select Questions to Exam
+
+<img src="/readme-img/exam-select-questions.png">
+
+* Exam View
+
+<img src="/readme-img/exam-view.png">
+
+* Exam Answer Key
+
+<img src="/readme-img/exam-answerkey.png">
+
+* Random Questions in Exam
+
+<img src="/readme-img/exam-random.png">
+
+* Exam Export to PDF
+
+<img src="/readme-img/exam-export-to-pdf.png">
+
+
