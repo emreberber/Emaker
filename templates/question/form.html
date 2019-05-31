@@ -1,0 +1,73 @@
+{% for field in form %}
+	<div class="form-group">
+
+	{% comment 'input sizes' %}
+		in all question, level input is col-sm-1 and others col-sm-6,
+		in question of Test, answer input is col-sm-1
+		in question of Boolean, answer input is col-sm-2
+	 {% endcomment %}
+	{% if request.GET.lesson_id  %}
+		{% if not field.id_for_label == 'lesson' %}
+		<label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label_tag }}</label>
+			{% if field.id_for_label == 'level' %}
+				<div class="col-sm-1">
+					{{ field }}
+				</div>
+			{% elif field.id_for_label == 'line' and request.GET.style == 'CLASSIC' %}
+				<div class="col-sm-1">
+					{{ field }}
+				</div>
+			{% elif field.id_for_label == 'answer' and request.GET.style == 'TEST' %}
+				<div class="col-sm-1">
+					{{ field }}
+				</div>
+			{% elif field.id_for_label == 'answer' and request.GET.style == 'BOOLEAN' %}
+				<div class="col-sm-2">
+					{{ field }}
+				</div>
+
+			{% else %}
+				<div class="col-sm-6">
+					{{ field }}
+				</div>
+			{% endif %}
+
+		{% comment 'lesson selectbox' %}
+			if request contain lesson_id, we dont display 'lesson' input.
+			lesson_id send with hidden input
+		{% endcomment %}
+		{% else %}
+			<input type="hidden" id="lesson" name="lesson" value="{{ request.GET.lesson_id }}">
+		{% endif %}
+
+	{# if request not contain lesson_id, display lesson selectbox #}
+	{% elif not request.GET.lesson_id %}
+		<label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label_tag }}</label>
+		{% if field.id_for_label == 'level' %}
+			<div class="col-sm-1">
+				{{ field }}
+			</div>
+		{% elif field.id_for_label == 'line' and request.GET.style == 'CLASSIC' %}
+			<div class="col-sm-1">
+				{{ field }}
+			</div>
+		{% elif field.id_for_label == 'answer' and request.GET.style == 'TEST' %}
+			<div class="col-sm-1">
+				{{ field }}
+			</div>
+		{% elif field.id_for_label == 'answer' and request.GET.style == 'BOOLEAN' %}
+			<div class="col-sm-2">
+				{{ field }}
+			</div>
+		{% else %}
+			<div class="col-sm-6">
+				{{ field }}
+			</div>
+		{% endif %}
+	{% endif %}
+
+	</div>
+	{{ form.errors }}
+{{ form.non_field_errors }}
+{% endfor %}
+

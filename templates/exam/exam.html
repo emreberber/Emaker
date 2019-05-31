@@ -1,0 +1,389 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Emaker | {{ exam.title }} </title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" type="image/png" href="{% static 'dist/favicon.ico' %}"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static 'components/font-awesome/css/font-awesome.min.css' %} ">
+	<link rel="stylesheet" href="{% static 'exam.css' %}">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark">
+	  <button class="btn btn-outline-light btn-sm" type="submit">{{ id }}</button>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+		  <li class="nav-item active">
+			<a class="nav-link" href="/exam/update/{{ id }}?lesson_id={{ lesson_id }}">
+				<button class="btn btn-outline-light btn-sm" type="submit"><i class="fa fa-edit"></i> Update</button>
+			</a>
+		  </li>
+		</ul>
+		  <a href="{% url 'exam:exam' id %}?random=True">
+		  	<button class="btn btn-sm btn-outline-light" style="margin-right: 7px" type="submit"><i class="fa fa-random"></i> &nbsp; Random</button>
+		  </a>
+
+		  	<button onclick="myFunction()" class="btn btn-sm btn-outline-light key" style="margin-right: 7px; display: block;" type="submit"><i class="fa fa-unlock"></i> &nbsp; Answer Key</button>
+		    <button onclick="myFunction()" class="btn btn-sm btn-outline-light key-bold" style="margin-right: 7px; display: none" type="submit"><i class="fa fa-lock"></i> &nbsp; Show Exam</button>
+
+		  <button id="cmd" class="btn btn-sm btn-warning" type="submit"><i class="fa fa-file-pdf-o"></i> &nbsp; Export to PDF</button>
+	  </div>
+	</nav>
+
+	<br><br>
+
+	<div id="content" class="content">
+		<div class="top-squares">
+			<div class="square"></div>
+			<div class="square"></div>
+			<div class="square"></div>
+		</div>
+
+		<div class="metadata-top" style="border-bottom: 1px solid #d9d9d9; padding: 5px; text-align: center;">
+			<b>{{ exam.metadata|safe }}</b>
+
+			<div class="keymeta" style="display: none;">- Answer Key -</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+
+				<!-- LEFT COLUMN -->
+
+				<div class="col-md-6">
+					{% for q in question %}
+						{% if q.style == 'TEST' and forloop.counter <= qnum_med %}
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-1">
+										<b>{{ forloop.counter }}.</b>
+									</div>
+									<div class="col-md-11">
+										{{ q.question|safe }}
+									</div>
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-1"></div><div class="col-md-1"><b>A)</b></div>
+											{% if q.answer == 'A' %}
+												<div class="col-md-10 key" style="display: block;">
+													  {{ q.answer_a|safe }}
+												</div>
+												<div class="col-md-10 key-bold" style="display: none;">
+													 <b>{{ q.answer_a|safe }}</b>
+												</div>
+											{% else %}
+												<div class="col-md-10">
+													 {{ q.answer_a|safe }}
+												</div>
+											{% endif %}
+											<div class="col-md-1"></div><div class="col-md-1"><b>B)</b></div>
+											{% if q.answer == 'B' %}
+												<div class="col-md-10 key" style="display: block;">
+													  {{ q.answer_b|safe }}
+												</div>
+												<div class="col-md-10 key-bold" style="display: none;">
+													 <b>{{ q.answer_b|safe }}</b>
+												</div>
+											{% else %}
+												<div class="col-md-10">
+													 {{ q.answer_b|safe }}
+												</div>
+											{% endif %}
+											<div class="col-md-1"></div><div class="col-md-1"><b>C)</b></div>
+											{% if q.answer == 'C' %}
+												<div class="col-md-10 key" style="display: block;">
+													  {{ q.answer_c|safe }}
+												</div>
+												<div class="col-md-10 key-bold" style="display: none;">
+													 <b>{{ q.answer_c|safe }}</b>
+												</div>
+											{% else %}
+												<div class="col-md-10">
+													 {{ q.answer_c|safe }}
+												</div>
+											{% endif %}
+
+											<div class="col-md-1"></div><div class="col-md-1"><b>D)</b></div>
+											{% if q.answer == 'D' %}
+												<div class="col-md-10 key" style="display: block;">
+													  {{ q.answer_d|safe }}
+												</div>
+												<div class="col-md-10 key-bold" style="display: none;">
+													 <b>{{ q.answer_d|safe }}</b>
+												</div>
+											{% else %}
+												<div class="col-md-10">
+													 {{ q.answer_d|safe }}
+												</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+						   </div>
+						{% endif %}
+						{% if q.style == 'CLASSIC' and forloop.counter <= qnum_med %}
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-1">
+										<b>{{ forloop.counter }}.</b>
+									</div>
+									<div class="col-md-11">
+										{{ q.question|safe }}
+									</div>
+									<div class="col-md-1" style="display: block;"></div>
+									<div class="col-md-11 key" style="display: block;">
+											{% for i in i|rjust:q.line %}
+												<br>
+											{% endfor %}
+										</div>
+										<div class="col-md-1" style="display: none;"></div>
+										<div class="col-md-11 key-bold" style="display: none;">
+											<b><br>{{ q.answer|safe }}<br></b>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+						{% if q.style == 'BOOLEAN' and forloop.counter <= qnum_med %}
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-1">
+										<b>{{ forloop.counter }}.</b>
+									</div>
+									<div class="col-md-11">
+										{{ q.question|safe }}
+									</div>
+									<div class="col-md-12">
+										<div class="row" style="text-align: center;">
+
+										{% if q.answer == 'TRUE' %}
+												<div class="col-md-6 key" style="display: block"><b>[ &nbsp; ]</b> True </div>
+												<div class="col-md-6 key" style="display: block"><b>[ &nbsp; ]</b> False </div>
+
+
+												<div class="col-md-6 key-bold" style="display: none;"><b>[ X ]</b> True </div>
+												<div class="col-md-6 key-bold" style="display: none;"><b>[ &nbsp; ]</b> False </div>
+											</div>
+
+										{% elif q.answer == 'FALSE' %}
+											<div class="col-md-6 key" style="display: block"><b>[ &nbsp; ]</b> True </div>
+											<div class="col-md-6 key" style="display: block"><b>[ &nbsp; ]</b> False </div>
+
+
+											<div class="col-md-6 key-bold" style="display: none;"><b>[ &nbsp; ]</b> True </div>
+											<div class="col-md-6 key-bold" style="display: none;"><b>[ X ]</b> False </div>
+										{% endif %}
+
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div> <!-- ./col-md-6 -->
+
+				<!-- RIGHT COLUMN -->
+
+				<div class="col-md-6 right-column">
+					{% for q in question %}
+						{% if q.style == 'TEST' and forloop.counter > qnum_med %}
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-1">
+										<b>{{ forloop.counter }}.</b>
+									</div>
+									<div class="col-md-11">
+										{{ q.question|safe }}
+									</div>
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-1"></div><div class="col-md-1"><b>A)</b></div>
+											{% if q.answer == 'A' %}
+												<div class="col-md-10 key" style="display: block;">
+													  {{ q.answer_a|safe }}
+												</div>
+												<div class="col-md-10 key-bold" style="display: none;">
+													 <b>{{ q.answer_a|safe }}</b>
+												</div>
+											{% else %}
+												<div class="col-md-10">
+													 {{ q.answer_a|safe }}
+												</div>
+											{% endif %}
+											<div class="col-md-1"></div><div class="col-md-1"><b>B)</b></div>
+											{% if q.answer == 'B' %}
+												<div class="col-md-10 key" style="display: block;">
+													  {{ q.answer_b|safe }}
+												</div>
+												<div class="col-md-10 key-bold" style="display: none;">
+													 <b>{{ q.answer_b|safe }}</b>
+												</div>
+											{% else %}
+												<div class="col-md-10">
+													 {{ q.answer_b|safe }}
+												</div>
+											{% endif %}
+											<div class="col-md-1"></div><div class="col-md-1"><b>C)</b></div>
+											{% if q.answer == 'C' %}
+												<div class="col-md-10 key" style="display: block;">
+													  {{ q.answer_c|safe }}
+												</div>
+												<div class="col-md-10 key-bold" style="display: none;">
+													 <b>{{ q.answer_c|safe }}</b>
+												</div>
+											{% else %}
+												<div class="col-md-10">
+													 {{ q.answer_c|safe }}
+												</div>
+											{% endif %}
+
+											<div class="col-md-1"></div><div class="col-md-1"><b>D)</b></div>
+											{% if q.answer == 'D' %}
+												<div class="col-md-10 key" style="display: block;">
+													  {{ q.answer_d|safe }}
+												</div>
+												<div class="col-md-10 key-bold" style="display: none;">
+													 <b>{{ q.answer_d|safe }}</b>
+												</div>
+											{% else %}
+												<div class="col-md-10">
+													 {{ q.answer_d|safe }}
+												</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+						   </div>
+						{% endif %}
+						{% if q.style == 'CLASSIC' and forloop.counter > qnum_med %}
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-1">
+										<b>{{ forloop.counter }}.</b>
+									</div>
+									<div class="col-md-11">
+										{{ q.question|safe }}
+									</div>
+									<div class="col-md-1" style="display: block;"></div>
+									<div class="col-md-11 key" style="display: block;">
+											{% for i in i|rjust:q.line %}
+												<br>
+											{% endfor %}
+										</div>
+										<div class="col-md-1" style="display: none;"></div>
+										<div class="col-md-11 key-bold" style="display: none;">
+											<b><br>{{ q.answer|safe }}<br></b>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+						{% if q.style == 'BOOLEAN' and forloop.counter > qnum_med %}
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-1">
+										<b>{{ forloop.counter }}.</b>
+									</div>
+									<div class="col-md-11">
+										{{ q.question|safe }}
+									</div>
+									<div class="col-md-12">
+										<div class="row" style="text-align: center;">
+
+										{% if q.answer == 'TRUE' %}
+												<div class="col-md-6 key" style="display: block"><b>[ &nbsp; ]</b> True </div>
+												<div class="col-md-6 key" style="display: block"><b>[ &nbsp; ]</b> False </div>
+
+
+												<div class="col-md-6 key-bold" style="display: none;"><b>[ X ]</b> True </div>
+												<div class="col-md-6 key-bold" style="display: none;"><b>[ &nbsp; ]</b> False </div>
+											</div>
+
+										{% elif q.answer == 'FALSE' %}
+											<div class="col-md-6 key" style="display: block"><b>[ &nbsp; ]</b> True </div>
+											<div class="col-md-6 key" style="display: block"><b>[ &nbsp; ]</b> False </div>
+
+
+											<div class="col-md-6 key-bold" style="display: none;"><b>[ &nbsp; ]</b> True </div>
+											<div class="col-md-6 key-bold" style="display: none;"><b>[ X ]</b> False </div>
+										{% endif %}
+
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div> <!-- ./col-md-6 -->
+			</div> <!-- ./row -->
+		</div> <!-- ./container -->
+	</div> <!-- ./content -->
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+
+<script>
+	$('#cmd').click(function () {
+		window.print();
+	});
+
+
+
+	// ANSWER KEY
+	function myFunction() {
+
+	    var key2 = document.getElementsByClassName('keymeta');
+		if (key2[0].style.display == "none" ) {
+			key2[0].style.display = "block";
+		}
+		else {
+			key2[0].style.display = "none";
+		}
+
+	  	var key = document.getElementsByClassName('key');
+		for (var i = 0; i < key.length; i++ ) {
+			if (key[i].style.display == "block" ) {
+				key[i].style.display = "none";
+			}
+			else {
+				key[i].style.display = "block";
+			}
+	}
+
+	var key2 = document.getElementsByClassName('key-bold');
+	for (var i = 0; i < key.length; i++ ) {
+	    if (key2[i].style.display == "block" ) {
+	        key2[i].style.display = "none";
+		}
+	    else {
+	        key2[i].style.display = "block";
+		}
+	}
+
+
+	let title = document.title;
+
+	let include = title.includes("Answer Key")
+		console.log(include)
+		if(include)
+		{
+		    title = title.replace("Answer Key", " ");
+		    document.title = title;
+		}
+		else {
+		    document.title += " Answer Key";
+		}
+
+	}
+</script>
+</body>
+</html>

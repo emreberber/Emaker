@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content-title %} Questions {% endblock %}
+
+{% block content-description %}
+	{% if lesson %} of {{ lesson.code }} - {{ lesson.name }}
+	{% else %} all
+	{% endif %}
+{% endblock %}
+
+{% block info %}
+	{% include 'question/messages.html' %}
+{% endblock %}
+
+{% block right-button %}
+	{% if request.GET.lesson_id %}
+		<div style="float:right" class="btn-group" role="group">
+			<a class="btn btn-success dropdown-toggle" style="float:right;border-radius:0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  <i class="fa fa-plus"></i> &nbsp; Add New Question
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right">
+			  <li><a href="{% url 'question:create' %}?lesson_id={{ request.GET.lesson_id }}&style=TEST">
+				  <i class="fa fa-list" aria-hidden="true"></i>Test</a></li>
+			  <li><a href="{% url 'question:create' %}?lesson_id={{ request.GET.lesson_id }}&style=CLASSIC">
+				  <i class="fa fa-pencil" aria-hidden="true"></i>Classic</a></li>
+			  <li><a href="{% url 'question:create' %}?lesson_id={{ request.GET.lesson_id }}&style=BOOLEAN">
+				  <i class="fa fa-check" aria-hidden="true"></i>Boolean</a></li>
+			</ul>
+		</div>
+		<div style="float:right; margin-right: 5px" class="btn-group" role="group">
+			<a href="{% url 'exam:create' %}?lesson_id={{ request.GET.lesson_id }}" style="float:right;border-radius:0" class="btn btn-default" >
+		<i class="fa fa-file-text-o"></i> &nbsp; Create Exam
+	</a>
+		</div>
+	{% elif not request.GET.lesson_id %}
+		<div style="float:right" class="btn-group" role="group">
+			<a class="btn btn-success dropdown-toggle" style="float:right;border-radius:0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  <i class="fa fa-plus"></i> &nbsp; Add New Question
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right">
+			  <li><a href="{% url 'question:create' %}?style=TEST">
+				  <i class="fa fa-list" aria-hidden="true"></i>Test</a></li>
+			  <li><a href="{% url 'question:create' %}?style=CLASSIC">
+				  <i class="fa fa-pencil" aria-hidden="true"></i>Classic</a></li>
+			  <li><a href="{% url 'question:create' %}?style=BOOLEAN">
+				  <i class="fa fa-check" aria-hidden="true"></i>Boolean</a></li>
+			</ul>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="box-body">
+      <table id="example1" class="table table-bordered table-striped">
+        <thead>
+        <tr>
+		  <th>Title</th>
+			{% if not request.GET.lesson_id %}
+			 <th>Lesson</th>
+			{% endif %}
+          <th>Subject</th>
+          <th>Style</th>
+          <th>Level</th>
+          <th>Modified Date</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for question in questions %}
+        <tr>
+		  <td><a href="{% url 'question:update' question.id %}?style={{ question.style }}">{{ question.title }}</a></td>
+			{% if not request.GET.lesson_id %}
+			 <td><a href="{% url 'question:index' %}?lesson_id={{ question.lesson_id}}">{{ question.lesson }}</a></td>
+			{% endif %}
+          <td>{{ question.subject }}</td>
+          <td>{{ question.style }}</td>
+          <td>{{ question.level }}</td>
+          <td>{{ question.updated_date|date:'Y-m-d H:i' }}</td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+{% endblock %}
+
+{% block script %}
+	{% if not request.GET.lesson_id %}
+		<script>
+		  $(function () {
+			$('#example1').DataTable({
+				'order'       : [[ 5, "desc" ]]
+			})
+		  })
+		</script>
+	{% else %}
+		<script>
+		  $(function () {
+			$('#example1').DataTable({
+				'order'       : [[ 4, "desc" ]]
+			})
+		  })
+		</script>
+	{% endif %}
+{% endblock %}

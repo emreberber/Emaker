@@ -1,0 +1,31 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %} Emaker | Login {% endblock %}
+
+{% block content %}
+	<body class="hold-transition login-page">
+		<div class="login-box">
+		  <div class="login-logo">
+			<a href=""><b>E</b>MAKER</a>
+		  </div>
+		  <div class="login-box-body">
+			<p class="login-box-msg">Sign in to start your session</p>
+			<form action="{% url 'accounts:login' %}" method="post">
+				{%  csrf_token %}
+
+				{% include 'accounts/form.html' %}
+
+			  <div class="row">
+				<div class="col-xs-12">
+				  <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+				</div>
+				<br><br><hr>
+				<div class="col-xs-4 col-xs-offset-4">
+				  <a href="{% url 'accounts:register' %}" class="text-center">or Register</a>
+				</div>
+			  </div>
+			</form>
+			<br>
+		  </div>
+		</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% load staticfiles %}
+
+
+<!-- Bootstrap 3.3.7 -->
+<script src="{% static 'components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static 'components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'components/fastclick/lib/fastclick.js' %}"></script>
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<script src="{% static 'assets/common.js' %}"></script>
+<script src="{% static 'assets/bootbox.min.js' %}"></script>
+
+
+<script>
+  $(document).ready(function () {
+    $('.sidebar-menu').tree()
+  })
+</script>
+
+{# PHOTOS PAGE SCRIPTS #}
+  <script src="{% static 'build/js/basic-upload.js' %}"></script>
+
+{# JQUERY FILE UPLOAD SCRIPTS #}
+  <script src="{% static 'build/js/jquery.ui.widget.js' %}"></script>
+  <script src="{% static 'build/js/jquery.iframe-transport.js' %}"></script>
+  <script src="{% static 'build/js/jquery.fileupload.js' %}"></script>
+
+
+
+{%  block script %} {% endblock %}
+
+</body>
+</html>
+

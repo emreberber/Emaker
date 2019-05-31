@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content-title %} Lessons {% endblock %}
+{% block content-description %} all {% endblock %}
+{% block info %}
+	{% include 'lesson/messages.html' %}
+{% endblock %}
+
+{% block right-button %}
+	<a href="{% url 'lesson:create' %}" style="float:right;border-radius:0" class="btn btn-success" >
+		<i class="fa fa-plus"></i> &nbsp; Add New Lesson
+	</a>
+{% endblock %}
+
+{% block body %}
+    <div class="box-body">
+      <table id="example1" class="table table-bordered table-striped">
+        <thead>
+	    <tr>
+		  <th>Code</th>
+		  <th>Name</th>
+		  <th>Number of Question</th>
+		  <th>Modified Date</th>
+	    </tr>
+        </thead>
+        <tbody>
+
+        {% for lesson in lessons %}
+		<tr>
+		  <td><a href="{% url 'lesson:update' lesson.id %}"> {{ lesson.code }}</a></td>
+		  <td> {{ lesson.name }} </td>
+		  <td><a href="{% url 'question:index'%}?lesson_id={{ lesson.id }}">{{ lesson.question_lesson.count }} </a></td>
+		  <td> {{ lesson.updated_date|date:'Y-m-d H:i' }} </td>
+		</tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+    </div>  
+{% endblock %}
+
+{% block script %}
+<script>
+  $(function () {
+    $('#example1').DataTable({
+		'order'       : [[ 3, "desc" ]]
+	})
+  })
+</script>
+{% endblock %}

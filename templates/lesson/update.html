@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content-title %} Lesson {% endblock %}
+{% block content-description %} Update {% endblock %}
+{% block info %}
+	{% include 'lesson/messages.html' %}
+{% endblock %}
+
+{% block body %}
+	<div class="box-body col-sm-6 col-sm-offset-3">
+		<form class="form-horizontal" method="post">
+			{% csrf_token %}
+
+			{% include 'lesson/form.html' %}
+
+			<div class="box-footer col-sm-6 col-sm-offset-2">
+				<div class="pull-right">
+					<a data="{% url 'lesson:delete' id %}" id="delete-lesson" onclick="deleteLesson()" class="btn btn-danger">	
+						<i class="fa fa-trash-o" aria-hidden="true"></i>
+						Delete
+					</a>
+				
+					<button type="submit" class="btn btn-success">
+						<i class="fa fa-check" aria-hidden="true"></i>
+						Update
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

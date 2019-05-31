@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content-title %} Exams {% endblock %}
+
+{% block content-description %}
+	all
+{% endblock %}
+
+{% block info %}
+	{% include 'exam/messages.html' %}
+{% endblock %}
+
+{% block right-button %}
+
+{% endblock %}
+
+{% block body %}
+    <div class="box-body">
+      <table id="example1" class="table table-bordered table-striped">
+        <thead>
+        <tr>
+		  <th>Title</th>
+		  <th>Lesson</th>
+          <th>Number Of Question</th>
+          <th>Modified Date</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for exam in exams %}
+        <tr>
+		  <td><a href="{% url 'exam:update' exam.id %}?lesson_id={{ exam.lesson_id }}">{{ exam.title }}</a></td>
+		  <td><a href="{% url 'question:index' %}?lesson_id={{ exam.lesson_id }}">{{ exam.lesson }}</a></td>
+          <td>{{ exam.questions.count }}</td>
+          <td>{{ exam.updated_date|date:'Y-m-d H:i' }}</td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+{% endblock %}
+
+{% block script %}
+	<script>
+	  $(function () {
+		$('#example1').DataTable({
+			'order'       : [[ 3, "desc" ]]
+		})
+	  })
+	</script>
+{% endblock %}

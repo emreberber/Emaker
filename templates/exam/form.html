@@ -1,0 +1,49 @@
+{% for field in form %}
+	{% if field.name == 'lesson' %}
+		<input type="hidden" id="lesson" name="lesson" value="{{ request.GET.lesson_id }}">
+	{% elif field.name == 'metadata' or field.name == 'title' %}
+		<div class="form-group">
+			<label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label_tag }}</label>
+			<div class="col-sm-6">
+				{{ field }}
+			</div>
+		</div>
+	{% else %}
+
+		<div id="question-modal" class="modal" tabindex="-1" role="dialog">
+			  <div class="modal-dialog" style="width: 33%;" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 style="float: left;" class="modal-title">{{ questions.count }} Question</h5>
+			        <button type="button" class="close" data-dismiss="modal" onclick="$('#question-modal').hide()" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+
+
+				  <div class="modal-body question-body">
+					<div class="container" style="width:100%">
+						<div class="row">
+                            <div class="col-md-12" >
+                                <div class="card">
+
+ 										{{ field }}
+
+                                    </div>
+							    </div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+			        <a href="{% url 'question:index' %}?lesson_id={{ request.GET.lesson_id }}" class="btn btn-default update-btn" >
+						View Questions &nbsp; &nbsp; <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+					</a>
+			      </div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+	{% endif %}
+
+{% endfor %}
+

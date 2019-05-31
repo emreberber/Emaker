@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content-title %} Lesson {% endblock %}
+{% block content-description %} Create {% endblock %}
+
+{% block body %}
+	<div class="box-body col-sm-6 col-sm-offset-3">
+		<form class="form-horizontal" method="post">
+			{% csrf_token %}
+
+			{% include 'lesson/form.html' %}
+
+			<div class="box-footer col-sm-6 col-sm-offset-2">
+				<div class="pull-right">
+					<button type="submit" class="btn btn-info">Create</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

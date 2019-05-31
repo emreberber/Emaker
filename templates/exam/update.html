@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content-title %} Exam {% endblock %}
+{% block content-description %}
+	Update
+{% endblock %}
+
+{% block info %}
+	{% include 'exam/messages.html' %}
+{% endblock %}
+
+{% block right-button %}
+	<div style="float:right; margin-right: 5px" class="btn-group" role="group">
+		<a href="/exam/{{ id }}" style="float:right;border-radius:0" class="btn btn-default" target="_blank">
+			<i class="fa fa-eye"></i> &nbsp; View this Exam
+		</a>
+	</div>
+{% endblock %}
+
+{% block body %}
+	<div class="box-body col-sm-12">
+		<form class="form-horizontal" method="post" enctype="multipart/form-data">
+
+			{% csrf_token %}
+
+
+			{{ form.media }}
+
+			{% include 'exam/form.html' %}
+
+			<div class="box-footer col-sm-6 col-sm-offset-2">
+				<div class="pull-left">
+					<a href="#" onclick = "$('#question-modal').show()" class="btn btn-default">Questions</a>
+					<a data="{% url 'exam:delete' id %}" id="delete-exam" onclick="deleteExam()" class="btn btn-danger">
+						<i class="fa fa-trash-o" aria-hidden="true"></i>
+						Delete
+					</a>
+					<button type="submit" class="btn btn-success">
+						<i class="fa fa-check" aria-hidden="true"></i>
+						Update
+					</button>
+
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}
+
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>

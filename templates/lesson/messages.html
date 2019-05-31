@@ -1,0 +1,19 @@
+{% if messages %}
+<script src="/static/components/jquery/dist/jquery.min.js "></script>
+
+
+<ul class="messages" style="list-style-type: none">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if 'text-green' in message.tags %}
+                <i class='fa fa-check' aria-hidden='true'></i>
+            {% elif 'text-red x' in message.tags %}
+                <i class='fa fa-times' aria-hidden='true'></i>
+			{% else %}
+                <i class='fa fa-trash-o' aria-hidden='true'></i>
+            {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}

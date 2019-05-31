@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content-title %} Question {% endblock %}
+{% block content-description %} Update {% endblock %}
+{% block info %}
+	{% include 'question/messages.html' %}
+{% endblock %}
+
+{% block body %}
+	<div class="box-body col-sm-12 ">
+		<form class="form-horizontal" method="post">
+			{% csrf_token %}
+
+			{{ form.media }}
+
+			{% include 'question/form.html' %}
+
+			<div class="box-footer col-sm-6 col-sm-offset-2">
+				<div class="pull-left">
+					<a data = "{% url 'question:delete' id %}"  id = "delete-question" onclick="deleteQuestion()" class="btn btn-danger">
+						<i class="fa fa-trash-o" aria-hidden="true"></i>
+						Delete
+					</a>
+					<button type="submit" class="btn btn-success">
+ 					<i class="fa fa-check" aria-hidden="true"></i>
+						Update
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

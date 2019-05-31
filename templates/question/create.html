@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content-title %} Question {% endblock %}
+{% block content-description %}
+	{% if lesson %} Create for {{ lesson.code }} - {{ lesson.name }}
+	{% else %} Create
+	{% endif %}
+{% endblock %}
+
+{% block info %}
+	{% include 'question/messages.html' %}
+{% endblock %}
+
+{% block right-button %}
+	<div style="float:right; margin-right: 5px" class="btn-group" role="group">
+		<a href="{% url 'question:index' %}?lesson_id={{ request.GET.lesson_id }}" style="float:right;border-radius:0" class="btn btn-default" >
+			<i class="fa fa-hand-o-left"></i> &nbsp; Return Questions
+		</a>
+	</div>
+{% endblock %}
+
+{% block body %}
+	<div class="box-body col-sm-12">
+		<form class="form-horizontal" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+
+			{{ form.media }}
+
+			{% include 'question/form.html' %}
+
+			<div class="box-footer col-sm-6 col-sm-offset-2">
+				<div class="pull-left">
+					<button type="submit" class="btn btn-info">Create</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}
+
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>

@@ -1,0 +1,8 @@
+{% for field in form %}
+	<div class="form-group has-feedback">
+		{{ field }}
+		{% if field.errors %}
+			{{ field.errors }}
+		{% endif %}
+	</div>
+{% endfor %}

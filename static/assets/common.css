@@ -1,0 +1,15 @@
+.question-body{
+    max-height: 400px;
+    overflow: auto;
+    min-height: 300px;
+}
+
+.nav-tabs li {
+    width: 100px;
+    text-align: center;
+}
+
+.update-btn{
+    width: 50%;
+    margin-right: 25%;
+}

@@ -1,0 +1,30 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %} Emaker | Register {% endblock %}
+
+{% block content %}
+	<body class="hold-transition register-page">
+		<div class="register-box">
+		  <div class="register-logo">
+			<a href=""><b>E</b>MAKER</a>
+		  </div>
+		  <div class="register-box-body">
+			<p class="login-box-msg">Register a new membership</p>
+			<form action="{% url 'accounts:register' %}" method="post">
+				{%  csrf_token %}
+
+				{% include 'accounts/form.html' %}
+
+			  <div class="row">
+				<div class="col-xs-12">
+				  <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+				</div>
+				<br><br><hr>
+				<div class="col-xs-4 col-xs-offset-4">
+				  <a href="{% url 'accounts:login' %}" class="text-center">or Sign in</a>
+				</div>
+			  </div>
+			</form>
+		  </div>
+		</div>
+{% endblock %}
