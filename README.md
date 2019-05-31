@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### görüşmeler (emre^2,ahmet)
 * 3 kasım'18 öncesi
   * django projesi oluşturuldu, blok şeması çizildi 
@@ -34,3 +35,7 @@ $ source venv/bin/activate
 (venv) $ python manage.py startapp exam
 (venv) $ python manage.py migrate
 (venv) $ python manage.py createsuperuser
+=======
+# Emaker
+web based exam preparation platform 
+>>>>>>> 509ae2ac52210137cdcf611a233c0140dd503594
